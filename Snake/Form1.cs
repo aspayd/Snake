@@ -38,6 +38,7 @@ namespace Snake
             Graphics canvas = e.Graphics;
 
             snake.Move();
+
             if (snake.Eat(food))
             {
                 food.PickSpot();
@@ -46,6 +47,14 @@ namespace Snake
             canvas.FillRectangle(Brushes.Green, new Rectangle(snake.X, snake.Y, tile_width, tile_height));
             
             canvas.FillRectangle(Brushes.Red, new Rectangle(food.X, food.Y, tile_width, tile_height));
+
+            if (snake.Tail != null)
+            {
+                foreach (Point p in snake.Tail)
+                {
+                    canvas.FillRectangle(Brushes.Green, new Rectangle(p.X, p.Y, tile_width, tile_height));
+                }
+            }
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)

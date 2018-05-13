@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace Snake
 {
@@ -13,6 +14,7 @@ namespace Snake
         public int Xdir { get; set; }
         public int Ydir { get; set; }
         public int Speed { get; set; }
+        public List<Point> Tail { get; set; }
 
         private int total = 0;
         private int tile_width = 20;
@@ -44,8 +46,15 @@ namespace Snake
 
         public void Move()
         {
-
-
+            if (Tail != null)
+            {
+                if (total == Tail.Count)
+                {
+                    Tail.Add(new Point(X, Y));
+                }
+                Tail[0] = new Point(X - tile_width, Y);
+            }
+            
             X += Xdir * tile_width;
             Y += Ydir * tile_height;
 
