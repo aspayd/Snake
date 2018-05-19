@@ -14,7 +14,7 @@ namespace Snake
         public int Xdir { get; set; }
         public int Ydir { get; set; }
         public int Speed { get; set; }
-        public List<Point> Tail { get; set; }
+        public List<Point> Tail = new List<Point>();
 
         private int total = 0;
         private int tile_width = 20;
@@ -35,6 +35,7 @@ namespace Snake
         {
             if(X == pos.X && Y == pos.Y)
             {
+                Tail.Add(new Point(X, Y));
                 total++;
                 return true;
             }
@@ -48,11 +49,14 @@ namespace Snake
         {
             if (Tail != null)
             {
-                if (total == Tail.Count)
+                
+                for(int i = 0; i < Tail.Count - 1; i++)
                 {
-                    Tail.Add(new Point(X, Y));
+                    Tail[i] = Tail[i + 1];
                 }
-                Tail[0] = new Point(X - tile_width, Y);
+
+                Tail.Insert(total, new Point(X, Y));
+                Tail.RemoveAt(0);
             }
             
             X += Xdir * tile_width;
