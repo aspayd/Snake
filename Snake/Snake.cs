@@ -13,7 +13,6 @@ namespace Snake
         public int Y { get; set; }
         public int Xdir { get; set; }
         public int Ydir { get; set; }
-        public int Speed { get; set; }
         public List<Point> Tail = new List<Point>();
 
         private int total = 0;
@@ -28,14 +27,14 @@ namespace Snake
             Y = 0;
             Xdir = 1;
             Ydir = 0;
-            Speed = 3;
+            total = 0;
         }
 
         public bool Eat(Food pos)
         {
-            if(X == pos.X && Y == pos.Y)
+            if (X == pos.X && Y == pos.Y)
             {
-                Tail.Add(new Point(X, Y));
+                Tail.Add(new Point(X - (Xdir * tile_width), (Y - Ydir) * tile_height));
                 total++;
                 return true;
             }
@@ -49,14 +48,16 @@ namespace Snake
         {
             if (Tail != null)
             {
-                
-                for(int i = 0; i < Tail.Count - 1; i++)
+                if (Tail.Count == total) {
+                for (int i = 0; i < Tail.Count - 1; i++)
                 {
-                    Tail[i] = Tail[i + 1];
+                    Tail.Insert(i, Tail[i + 1]);
+                        Tail.RemoveAt(i);
                 }
 
-                Tail.Insert(total, new Point(X, Y));
-                Tail.RemoveAt(0);
+            Tail.Insert(Tail.Count, new Point(X, Y));
+            Tail.RemoveAt(0);
+                }
             }
             
             X += Xdir * tile_width;
