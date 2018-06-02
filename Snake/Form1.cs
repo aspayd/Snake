@@ -37,23 +37,37 @@ namespace Snake
         {
             Graphics canvas = e.Graphics;
 
-            snake.Move();
+            StringFormat sf = new StringFormat();
+            sf.Alignment = StringAlignment.Center;
+            sf.LineAlignment = StringAlignment.Center;
 
-            if (snake.Eat(food))
-            {
-                food.PickSpot();
-            }
 
-            canvas.FillRectangle(Brushes.Green, new Rectangle(snake.X, snake.Y, tile_width, tile_height));
             
-            canvas.FillRectangle(Brushes.Red, new Rectangle(food.X, food.Y, tile_width, tile_height));
 
-            if (snake.Tail != null)
-            {
-                foreach (Point p in snake.Tail)
+                snake.Move();
+                canvas.FillRectangle(Brushes.Green, new Rectangle(snake.X, snake.Y, tile_width, tile_height));
+
+                canvas.FillRectangle(Brushes.Red, new Rectangle(food.X, food.Y, tile_width, tile_height));
+
+                if (snake.Tail != null)
                 {
-                    canvas.FillRectangle(Brushes.Green, new Rectangle(p.X, p.Y, tile_width, tile_height));
+                    foreach (Point p in snake.Tail)
+                    {
+                        canvas.FillRectangle(Brushes.Green, new Rectangle(p.X, p.Y, tile_width, tile_height));
+                    }
                 }
+
+                // eat food if over it
+                if (snake.Eat(food))
+                {
+                    food.PickSpot();
+                }
+            
+                if(snake.GameOver())
+                {
+                //canvas.DrawString("Game Over", Font, Brushes.White, new Point(pbCanvas.Size.Width / 2, pbCanvas.Size.Height / 2), sf);
+                //snake.Tail.RemoveRange(0, snake.Tail.Count);
+                //snake.Total = 0;
             }
         }
 
