@@ -41,9 +41,6 @@ namespace Snake
             sf.Alignment = StringAlignment.Center;
             sf.LineAlignment = StringAlignment.Center;
 
-
-            
-
                 snake.Move();
                 canvas.FillRectangle(Brushes.Green, new Rectangle(snake.X, snake.Y, tile_width, tile_height));
 
