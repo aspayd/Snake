@@ -70,22 +70,34 @@ namespace Snake
         {
             if(e.KeyCode == Keys.Up)
             {
+                if (snake.Ydir != 1 || snake.Total == 0)
+                {
                     snake.Ydir = -1;
                     snake.Xdir = 0;
+                }
             }else if(e.KeyCode == Keys.Down)
             {
-                snake.Ydir = 1;
-                snake.Xdir = 0;
+                if (snake.Ydir != -1 || snake.Total == 0)
+                {
+                    snake.Ydir = 1;
+                    snake.Xdir = 0;
+                }
             }
-            if(e.KeyCode == Keys.Left)
+            if (e.KeyCode == Keys.Left)
             {
-                snake.Xdir = -1;
-                snake.Ydir = 0;
+                if (snake.Xdir != 1 || snake.Total == 0)
+                {
+                    snake.Xdir = -1;
+                    snake.Ydir = 0;
+                }
             }
             else if(e.KeyCode == Keys.Right)
             {
-                snake.Xdir = 1;
-                snake.Ydir = 0;
+                if (snake.Xdir != -1 || snake.Total == 0)
+                {
+                    snake.Xdir = 1;
+                    snake.Ydir = 0;
+                }
             }
         }
     }
