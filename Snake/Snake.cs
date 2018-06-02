@@ -34,7 +34,7 @@ namespace Snake
         {
             for(int p = 0; p < Tail.Count - 1; p++)
             {
-                if (Tail[p].X == X || Tail[p].Y == Y)
+                if (Tail[p].X == X && Tail[p].Y == Y)
                 {
                     return true;
                 }
@@ -63,9 +63,8 @@ namespace Snake
                 if (Tail.Count == Total) {
                 for (int i = 0; i < Tail.Count - 1; i++)
                 {
-                        Tail[i] = Tail[i + 1];
-                        //Tail.Insert(i, Tail[i + 1]);
-                        //Tail.RemoveAt(i);
+                        Tail.Insert(i, Tail[i + 1]);
+                        Tail.RemoveAt(i);
                     }
 
                     Tail.Insert(Tail.Count, new Point(X, Y));

@@ -37,10 +37,8 @@ namespace Snake
         {
             Graphics canvas = e.Graphics;
 
-            StringFormat sf = new StringFormat();
-            sf.Alignment = StringAlignment.Center;
-            sf.LineAlignment = StringAlignment.Center;
-
+            if (!snake.GameOver())
+            {
                 snake.Move();
                 canvas.FillRectangle(Brushes.Green, new Rectangle(snake.X, snake.Y, tile_width, tile_height));
 
@@ -59,13 +57,13 @@ namespace Snake
                 {
                     food.PickSpot();
                 }
-            
-                if(snake.GameOver())
-                {
-                //canvas.DrawString("Game Over", Font, Brushes.White, new Point(pbCanvas.Size.Width / 2, pbCanvas.Size.Height / 2), sf);
-                //snake.Tail.RemoveRange(0, snake.Tail.Count);
-                //snake.Total = 0;
+
+                canvas.DrawString("Score: " + snake.Total, Font, Brushes.White, new Point(6, 5));
             }
+            else{
+                    snake.Tail.RemoveRange(0, snake.Tail.Count);
+                    snake.Total = 0;
+                }
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
