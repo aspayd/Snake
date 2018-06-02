@@ -14,8 +14,8 @@ namespace Snake
         public int Xdir { get; set; }
         public int Ydir { get; set; }
         public List<Point> Tail = new List<Point>();
+        public int Total { get; set; }
 
-        private int total = 0;
         private int tile_width = 20;
         private int tile_height = 20;
         private int height = 500;
@@ -27,15 +27,27 @@ namespace Snake
             Y = 0;
             Xdir = 1;
             Ydir = 0;
-            total = 0;
+            Total = 0;
+        }
+
+        public bool GameOver()
+        {
+            for(int p = 0; p < Tail.Count - 1; p++)
+            {
+                if (Tail[p].X == X && Tail[p].Y == Y)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public bool Eat(Food pos)
         {
             if (X == pos.X && Y == pos.Y)
             {
-                Tail.Add(new Point(X - (Xdir * tile_width), (Y - Ydir) * tile_height));
-                total++;
+                Tail.Add(new Point(X - (Xdir * tile_width), Y - (Ydir * tile_height)));
+                Total++;
                 return true;
             }
             else
@@ -48,33 +60,35 @@ namespace Snake
         {
             if (Tail != null)
             {
-                if (Tail.Count == total) {
+                if (Tail.Count == Total) {
                 for (int i = 0; i < Tail.Count - 1; i++)
                 {
-                    Tail.Insert(i, Tail[i + 1]);
+                        Tail.Insert(i, Tail[i + 1]);
                         Tail.RemoveAt(i);
-                }
+                    }
 
-            Tail.Insert(Tail.Count, new Point(X, Y));
-            Tail.RemoveAt(0);
+                    Tail.Insert(Tail.Count, new Point(X, Y));
+                    Tail.RemoveAt(0);
                 }
             }
-            
+                        
+            // move the snake one tile at a time
             X += Xdir * tile_width;
             Y += Ydir * tile_height;
 
-            if(X < 0)
+            // set up hitboxes
+            if(X <= 0)
             {
                 X = 0;
-            }else if(X > width - tile_width)
+            }else if(X >= width - tile_width)
             {
                 X = width - tile_width;
             }
 
-            if(Y < 0)
+            if(Y <= 0)
             {
                 Y = 0;
-            }else if(Y > height - tile_height)
+            }else if(Y >= height - tile_height)
             {
                 Y = height - tile_height;
             }

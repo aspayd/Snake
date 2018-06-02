@@ -37,24 +37,33 @@ namespace Snake
         {
             Graphics canvas = e.Graphics;
 
-            snake.Move();
-
-            if (snake.Eat(food))
+            if (!snake.GameOver())
             {
-                food.PickSpot();
-            }
+                snake.Move();
+                canvas.FillRectangle(Brushes.Green, new Rectangle(snake.X, snake.Y, tile_width, tile_height));
 
-            canvas.FillRectangle(Brushes.Green, new Rectangle(snake.X, snake.Y, tile_width, tile_height));
-            
-            canvas.FillRectangle(Brushes.Red, new Rectangle(food.X, food.Y, tile_width, tile_height));
+                canvas.FillRectangle(Brushes.Red, new Rectangle(food.X, food.Y, tile_width, tile_height));
 
-            if (snake.Tail != null)
-            {
-                foreach (Point p in snake.Tail)
+                if (snake.Tail != null)
                 {
-                    canvas.FillRectangle(Brushes.Green, new Rectangle(p.X, p.Y, tile_width, tile_height));
+                    foreach (Point p in snake.Tail)
+                    {
+                        canvas.FillRectangle(Brushes.Green, new Rectangle(p.X, p.Y, tile_width, tile_height));
+                    }
                 }
+
+                // eat food if over it
+                if (snake.Eat(food))
+                {
+                    food.PickSpot();
+                }
+
+                canvas.DrawString("Score: " + snake.Total, Font, Brushes.White, new Point(6, 5));
             }
+            else{
+                    snake.Tail.RemoveRange(0, snake.Tail.Count);
+                    snake.Total = 0;
+                }
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
